@@ -6,9 +6,7 @@ manhattan(pos(X, Y), pos(XF, YF), Dist) :-
 initialize :- 
     retractall(current_depth(_)),
     iniziale(S),
-    finale(ListaStatiFinali),
-    merge_sort(ListaStatiFinali, ListaStatiFinaliOrdinata, S),
-    member(FinaleMigliore, ListaStatiFinaliOrdinata),
+    stato_finale_migliore(S, FinaleMigliore), 
     manhattan(S, FinaleMigliore, Dist),
     assert(current_depth(Dist)).
     
@@ -30,10 +28,8 @@ risolvi(S, [], _, _) :- finale(ListaFinali), member(S,ListaFinali), !.
 
 risolvi(S, [AzioneMigliore|ListaAzioni], Visitati, ProfMax) :-  
     ProfMax > 0,
-    finale(ListaStatiFinali),
-    merge_sort(ListaStatiFinali, ListaStatiFinaliOrdinata, S),
-    member(FinaleMigliore, ListaStatiFinaliOrdinata),
-    %write('Da stato:'), write(S), write(', lo stato migliore è: '), write(FinaleMigliore), write('\n'),
+    stato_finale_migliore(S, FinaleMigliore),
+    write('Da stato:'), write(S), write(', lo stato migliore è: '), write(FinaleMigliore), write('\n'),
     %Qui dovremmo calcolare manhattan per decidere su quale finale puntare
     findall(Az, applicabile(Az, S), AzioniPossibili),
     %ordinare la lista di azioni possibili in base all'euristica nello stato di destinazione
@@ -78,39 +74,8 @@ split_in_half(L,L1,L2, Half) :-
     length(L1, Half),
     append(L1, L2, L).
 
-
-merge_sort([],[], _).     % empty list is already sorted
-merge_sort([X],[X], _).   % single element list is already sorted
-merge_sort(List,Sorted, pos(XAttuale, YAttuale)):-
-    List=[_,_|_],divide(List,L1,L2),     % list with at least two elements is divided into two parts
-    merge_sort(L1,Sorted1, pos(XAttuale, YAttuale)),merge_sort(L2,Sorted2, pos(XAttuale, YAttuale)),  % then each part is sorted
-    merge(Sorted1,Sorted2,Sorted, pos(XAttuale, YAttuale)).                  % and sorted parts are merged
-merge([],L,L, _).
-merge(L,[],L, _):-L\=[].
-merge([pos(XFinaleX, YFinaleX)|T1],[pos(XFinaleY, YFinaleY)|T2],[pos(XFinaleX, YFinaleX)|T], pos(XAttuale, YAttuale)):-
-    manhattan(pos(XAttuale, YAttuale), pos(XFinaleX, YFinaleX), DistanzaX),
-    manhattan(pos(XAttuale, YAttuale), pos(XFinaleY, YFinaleY), DistanzaY),
-    DistanzaX=<DistanzaY,
-    merge(T1,[pos(XFinaleY, YFinaleY)|T2],T).
-merge([pos(XFinaleX, YFinaleX)|T1],[pos(XFinaleY, YFinaleY)|T2],[pos(XFinaleY, YFinaleY)|T], pos(XAttuale, YAttuale)):-
-    manhattan(pos(XAttuale, YAttuale), pos(XFinaleX, YFinaleX), DistanzaX),
-    manhattan(pos(XAttuale, YAttuale), pos(XFinaleY, YFinaleY), DistanzaY),
-    DistanzaX>DistanzaY,
-    merge([pos(XFinaleX, YFinaleX)|T1],T2,T).
-
-
-
-
-stato_finale_vicino(_, [], _, _).
-stato_finale_vicino(pos(XAttuale,YAttuale), [Finale | AltriFinali], FinaleMigliore, DistanzaMinima) :-
-    manhattan(pos(XAttuale,YAttuale), Finale, Distanza),
-    Distanza >= DistanzaMinima,
-    stato_finale_vicino(pos(XAttuale,YAttuale), AltriFinali, FinaleMigliore, DistanzaMinima).
-
-stato_finale_vicino(pos(XAttuale,YAttuale), [Finale | AltriFinali], _, DistanzaMinima) :-
-    manhattan(pos(XAttuale,YAttuale), Finale, Distanza),
-    Distanza < DistanzaMinima,
-    stato_finale_vicino(pos(XAttuale,YAttuale), AltriFinali, Finale, Distanza).
-
-
-    
+stato_finale_migliore(pos(X,Y), StatoFinale) :- 
+    finale(ListaStatiFinali),
+    member(StatoFinale, ListaStatiFinali),
+    manhattan(pos(X,Y), StatoFinale, Distanza_1),
+    \+ (member(AltroStato, ListaStatiFinali), manhattan(pos(X, Y), AltroStato, Distanza_2), Distanza_2 < Distanza_1).
