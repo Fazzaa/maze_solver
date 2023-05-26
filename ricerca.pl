@@ -30,7 +30,7 @@ risolvi(S, [], _, _) :- finale(ListaFinali), member(S,ListaFinali), !.
 risolvi(S, [AzioneMigliore|ListaAzioni], Visitati, ProfMax) :-  
     ProfMax > 0,
     current_depth(D),
-    stato_finale_migliore(S, (FinaleMigliore, DSFinaleMigliore), Visitati),
+    stato_finale_migliore(S, (FinaleMigliore, _), Visitati),
     findall(Az, applicabile(Az, S), AzioniPossibili),
     merge_sort(AzioniPossibili, AzioniPossibiliOrdinate, S, FinaleMigliore, Visitati),
     member((AzioneMigliore, DistanzaStatoMigliore), AzioniPossibiliOrdinate),
@@ -80,19 +80,19 @@ stato_finale_migliore(pos(X,Y), (StatoFinale, Distanza_1), Visitati) :-
     finale(ListaStatiFinali),
     member(StatoFinale, ListaStatiFinali),
     manhattan(pos(X,Y), StatoFinale, Distanza_1, Visitati),
-    \+ (member(AltroStato, ListaStatiFinali), manhattan(pos(X, Y), AltroStato, Distanza_2, Visitati), Distanza_2 < Distanza_1). 
+    \+ (member(AltroStato, ListaStatiFinali), manhattan(pos(X, Y), AltroStato, Distanza_2, Visitati), Distanza_2 < Distanza_1), !. 
 
-find_next_limit(SogliaAttuale, [(Az,D) | AzioniPossibiliOrdinate]):-
+find_next_limit(SogliaAttuale, [(Az,D) | AzioniPossibiliOrdinate]) :-
     next_depth(NextDepth),
     member((_, NextFn), [(Az,D) | AzioniPossibiliOrdinate]), 
     NextFn >= SogliaAttuale,
     NextFn >= NextDepth,
-    \+ (member((_, AltroFn), [(Az,D) | AzioniPossibiliOrdinate]), AltroFn > SogliaAttuale, AltroFn > NextDepth, AltroFn < NextFn),
+    \+ (member((_, AltroFn), [(Az,D) | AzioniPossibiliOrdinate]), AltroFn > SogliaAttuale, AltroFn > NextDepth, AltroFn < NextFn), !,
     retractall(next_depth(_)),
     assert(next_depth(NextFn)).
 
-find_next_limit(SogliaAttuale, [(Az,D) | AzioniPossibiliOrdinate]):-
+find_next_limit(SogliaAttuale, [(Az,D) | AzioniPossibiliOrdinate]) :-
     next_depth(NextDepth),
-    member((_, NextFn), [(Az,D) | AzioniPossibiliOrdinate]), 
+    member((_, NextFn), [(Az,D) | AzioniPossibiliOrdinate]), !, 
     NextFn =< NextDepth,
     NextFn =< SogliaAttuale.
