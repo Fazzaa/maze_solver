@@ -45,7 +45,7 @@ risolvi(S, [AzioneMigliore|ListaAzioni], Visitati, ProfMax) :-
 merge_sort([],[], _, _, _).     % empty list is already sorted
 merge_sort([X],[(X, DistanzaX)], pos(XAttuale, YAttuale), pos(XTarget, YTarget), Visitati) :-
     trasforma(X, pos(XAttuale, YAttuale), pos(XNuovoStatoX, YNuovoStatoX)),
-    manhattan(pos(XNuovoStatoX, YNuovoStatoX), pos(XTarget, YTarget), DistanzaX, Visitati).   % single element list is already sorted
+    manhattan(pos(XNuovoStatoX, YNuovoStatoX), pos(XTarget, YTarget), DistanzaX, Visitati), !.   % single element list is already sorted
 merge_sort(List,Sorted, pos(XAttuale, YAttuale), pos(XTarget, YTarget), Visitati):-
     List=[_,_|_],divide(List,L1,L2),     % list with at least two elements is divided into two parts
     merge_sort(L1,Sorted1, pos(XAttuale, YAttuale), pos(XTarget, YTarget), Visitati),merge_sort(L2,Sorted2, pos(XAttuale, YAttuale), pos(XTarget, YTarget), Visitati),  % then each part is sorted
@@ -57,14 +57,14 @@ merge([(X, DistanzaX)|T1],[(Y, DistanzaY)|T2],[(X, DistanzaX)|T], pos(XAttuale, 
     trasforma(Y, pos(XAttuale, YAttuale), pos(XNuovoStatoY, YNuovoStatoY)),
     manhattan(pos(XNuovoStatoX, YNuovoStatoX), pos(XTarget, YTarget), DistanzaX, Visitati),
     manhattan(pos(XNuovoStatoY, YNuovoStatoY), pos(XTarget, YTarget), DistanzaY, Visitati),
-    DistanzaX=<DistanzaY,
+    DistanzaX=<DistanzaY,!,
     merge(T1,[(Y, DistanzaY)|T2],T).
 merge([(X, DistanzaX)|T1],[(Y, DistanzaY)|T2],[(Y, DistanzaY)|T], pos(XAttuale, YAttuale), pos(XTarget, YTarget), Visitati):-
     trasforma(X, pos(XAttuale, YAttuale), pos(XNuovoStatoX, YNuovoStatoX)),
     trasforma(Y, pos(XAttuale, YAttuale), pos(XNuovoStatoY, YNuovoStatoY)),
     manhattan(pos(XNuovoStatoX, YNuovoStatoX), pos(XTarget, YTarget), DistanzaX, Visitati),
     manhattan(pos(XNuovoStatoY, YNuovoStatoY), pos(XTarget, YTarget), DistanzaY, Visitati),
-    DistanzaX>DistanzaY,
+    DistanzaX>DistanzaY, !,
     merge([(X, DistanzaX)|T1],T2,T).
     
 divide(L,L1,L2):- 
@@ -85,8 +85,8 @@ stato_finale_migliore(pos(X,Y), (StatoFinale, Distanza_1), Visitati) :-
 find_next_limit(SogliaAttuale, [(Az,D) | AzioniPossibiliOrdinate]) :-
     next_depth(NextDepth),
     member((_, NextFn), [(Az,D) | AzioniPossibiliOrdinate]), 
-    NextFn >= SogliaAttuale,
-    NextFn >= NextDepth,
+    NextFn > SogliaAttuale,
+    NextFn > NextDepth,
     \+ (member((_, AltroFn), [(Az,D) | AzioniPossibiliOrdinate]), AltroFn > SogliaAttuale, AltroFn > NextDepth, AltroFn < NextFn), !,
     retractall(next_depth(_)),
     assert(next_depth(NextFn)).
