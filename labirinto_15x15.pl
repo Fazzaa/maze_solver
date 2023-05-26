@@ -16,3 +16,6 @@ occupata(pos(4,8)).
 occupata(pos(5,8)).
 occupata(pos(6,8)).
 occupata(pos(7,8)).
+occupata(pos(8,8)).
+occupata(pos(9,8)).
+occupata(pos(10,8)).
