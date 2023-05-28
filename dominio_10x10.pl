@@ -1,0 +1,26 @@
+occupata(pos(2, 7)).
+occupata(pos(2, 8)).
+occupata(pos(2, 9)).
+occupata(pos(2, 10)).
+occupata(pos(4, 5)).
+occupata(pos(5, 1)).
+iniziale(pos(5, 1)).
+occupata(pos(5, 2)).
+occupata(pos(5, 3)).
+occupata(pos(5, 5)).
+occupata(pos(6, 5)).
+occupata(pos(7, 1)).
+occupata(pos(7, 2)).
+occupata(pos(7, 3)).
+occupata(pos(7, 5)).
+occupata(pos(7, 8)).
+occupata(pos(7, 9)).
+occupata(pos(7, 10)).
+occupata(pos(8, 3)).
+occupata(pos(8, 5)).
+occupata(pos(9, 3)).
+occupata(pos(10, 3)).
+occupata(pos(10, 4)).
+occupata(pos(10, 5)).
+occupata(pos(10, 6)).
+finale([pos(5, 10), pos(7, 1)]).
