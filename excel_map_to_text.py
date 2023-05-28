@@ -18,18 +18,20 @@ alphabet = list(string.ascii_uppercase)[1:]
 
 
 workbook = openpyxl.Workbook()
-workbook = openpyxl.load_workbook(filename = 'maze.xlsx')
+workbook = openpyxl.load_workbook(filename = 'map_creator.xlsx')
 sheet = workbook[f"{N_MAP}x{N_MAP}"]
 
 f = open(f"dominio_{N_MAP}x{N_MAP}.pl", "w")
+f.write(f"num_col({N_MAP}).\n")
+f.write(f"num_righe({N_MAP}).\n")
 final_state = []
 for row in range(2, N_MAP+2):
     for letter in alphabet:
-        if sheet[f'{letter}{row-1}'].value == 'O':
+        if sheet[f'{letter}{row}'].value == 'O':
             f.write(f"occupata(pos({row-1}, {alphabet.index(letter)+1})).\n")
-        if sheet[f'{letter}{row}'].value == 'F':
+        elif sheet[f'{letter}{row}'].value == 'F':
             final_state.append(f"pos({row-1}, {alphabet.index(letter)+1})")
-        if sheet[f'{letter}{row}'].value == 'S':
+        elif sheet[f'{letter}{row}'].value == 'S':
             f.write(f"iniziale(pos({row-1}, {alphabet.index(letter)+1})).\n") 
 
 f.write(f"finale({final_state}).")
