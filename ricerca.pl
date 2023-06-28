@@ -1,9 +1,19 @@
+% se a richiedere il calcolo è la posizione di partenza non aggiungiamo nulla
 manhattan(pos(X, Y), pos(XF, YF), Fn, Visitati) :-
+    iniziale(pos(X,Y)),
     XDiff is abs(X-XF),
     YDiff is abs(Y-YF),
     Hn is XDiff+YDiff,
     length(Visitati, Gn),
     Fn is Hn + Gn.
+% se a richiedere il calcolo non è la posizione di partenza aggiungiamo un passo
+manhattan(pos(X, Y), pos(XF, YF), Fn, Visitati) :-
+    \+ iniziale(pos(X,Y)),
+    XDiff is abs(X-XF),
+    YDiff is abs(Y-YF),
+    Hn is XDiff+YDiff,
+    length(Visitati, Gn),
+    Fn is Hn + Gn + 1.
 
 initialize :- 
     retractall(current_depth(_)),
@@ -75,6 +85,7 @@ divide(L,L1,L2):-
 split_in_half(L,L1,L2, Half) :-  
     length(L1, Half),
     append(L1, L2, L).
+
 
 stato_finale_migliore(pos(X,Y), (StatoFinale, Distanza_1), Visitati) :- 
     finale(ListaStatiFinali),

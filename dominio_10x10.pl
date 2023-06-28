@@ -1,5 +1,9 @@
+% prondità 15, < 1 sec
+
 num_col(10).
 num_righe(10).
+iniziale(pos(5, 1)).
+
 occupata(pos(1, 7)).
 occupata(pos(1, 8)).
 occupata(pos(1, 9)).
@@ -9,7 +13,6 @@ occupata(pos(4, 1)).
 occupata(pos(4, 2)).
 occupata(pos(4, 3)).
 occupata(pos(4, 5)).
-iniziale(pos(5, 1)).
 occupata(pos(5, 5)).
 occupata(pos(6, 1)).
 occupata(pos(6, 2)).

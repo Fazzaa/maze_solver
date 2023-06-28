@@ -1,7 +1,23 @@
+%profondità 77, 1.58 min.
+
 num_col(20).
 num_righe(20).
 iniziale(pos(1, 1)).
 occupata(pos(1, 2)).
+occupata(pos(1, 6)).
+occupata(pos(1, 7)).
+occupata(pos(1, 8)).
+occupata(pos(1, 9)).
+occupata(pos(1, 10)).
+occupata(pos(1, 11)).
+occupata(pos(1, 12)).
+occupata(pos(1, 13)).
+occupata(pos(1, 14)).
+occupata(pos(1, 15)).
+occupata(pos(1, 16)).
+occupata(pos(1, 17)).
+occupata(pos(1, 18)).
+occupata(pos(1, 19)).
 occupata(pos(2, 2)).
 occupata(pos(2, 4)).
 occupata(pos(3, 2)).
@@ -118,16 +134,34 @@ occupata(pos(17, 2)).
 occupata(pos(17, 3)).
 occupata(pos(17, 4)).
 occupata(pos(17, 5)).
+occupata(pos(17, 7)).
+occupata(pos(17, 8)).
+occupata(pos(17, 9)).
+occupata(pos(17, 10)).
 occupata(pos(17, 12)).
 occupata(pos(17, 14)).
 occupata(pos(17, 16)).
+occupata(pos(18, 5)).
+occupata(pos(18, 7)).
+occupata(pos(18, 8)).
+occupata(pos(18, 9)).
+occupata(pos(18, 10)).
 occupata(pos(18, 12)).
 occupata(pos(18, 16)).
 occupata(pos(19, 1)).
 occupata(pos(19, 2)).
 occupata(pos(19, 3)).
+occupata(pos(19, 5)).
+occupata(pos(19, 7)).
+occupata(pos(19, 8)).
+occupata(pos(19, 9)).
+occupata(pos(19, 10)).
 occupata(pos(19, 12)).
 occupata(pos(19, 16)).
+occupata(pos(20, 7)).
+occupata(pos(20, 8)).
+occupata(pos(20, 9)).
+occupata(pos(20, 10)).
 occupata(pos(20, 12)).
 occupata(pos(20, 13)).
 occupata(pos(20, 14)).
