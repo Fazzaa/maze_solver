@@ -6,6 +6,7 @@ manhattan(pos(X, Y), pos(XF, YF), Fn, Visitati) :-
     Hn is XDiff+YDiff,
     length(Visitati, Gn),
     Fn is Hn + Gn.
+
 % se a richiedere il calcolo non è la posizione di partenza aggiungiamo un passo
 manhattan(pos(X, Y), pos(XF, YF), Fn, Visitati) :-
     \+ iniziale(pos(X,Y)),

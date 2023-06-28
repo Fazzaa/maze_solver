@@ -1,4 +1,4 @@
-%profondità 33, 1 sec 
+%profondità 33, < 1 sec 
 
 num_col(15).
 num_righe(15).
